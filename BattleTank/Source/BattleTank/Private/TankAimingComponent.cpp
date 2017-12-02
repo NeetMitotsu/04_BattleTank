@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAimingComponent.h"
-
+#include "Engine.h"
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
 {
@@ -33,9 +33,54 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
-	UE_LOG(LogTemp, Warning, TEXT("Firing at %f"), LaunchSpeed);
+	if (!Barrel) {
+		return;
+	}
+	// 发射速度
+	FVector OutLaunchVelocity;
+	// 开始位置
+	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
+
+	// 计算到达指向位置所需的速度向量OutLaunchVelocity（x, y, z） 
+	// 
+	bool bHaveAimSolusion = UGameplayStatics::SuggestProjectileVelocity(
+		this,
+		OutLaunchVelocity,
+		StartLocation,
+		HitLocation,// 到达位置
+		LaunchSpeed,// 初速度
+		false,// 是否为弧线？
+		//0,// 碰撞半径
+		//0,//重力
+		ESuggestProjVelocityTraceOption::DoNotTrace // 跟踪选项
+	);
+	
+	if (bHaveAimSolusion) { // Calculate the OutLaunchVelocity
+		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
+		auto TankName = GetOwner()->GetName();
+		MoveBarrelTowards(AimDirection);
+		UE_LOG(LogTemp, Warning, TEXT("%s Aiming at %s"),*TankName, *AimDirection.ToString());
+	}
+	// if no solusion found do nothing
 }
 
 void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent * BarrelToSet) {
 	this->Barrel = BarrelToSet;
+}
+
+void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
+
+	// Work-out difference between current barrel rotation, and AimDirection
+	// 计算当前炮台和AimDirection之间，需要旋转的角度
+	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
+	auto AimAsRotator = AimDirection.Rotation();
+	auto DeltaRotator = AimAsRotator - BarrelRotator;
+	UE_LOG(LogTemp, Warning, TEXT("AimAsRotator : %s"), *DeltaRotator.ToString());
+	// Move the barrel the right amount this frame
+	// 在当前帧移动适量的角度
+
+	// Given a max elevation speed, and the frame time
+	// 给定最大仰角速度和帧时间
+
+
 }
