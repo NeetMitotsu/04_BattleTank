@@ -76,11 +76,8 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 	UE_LOG(LogTemp, Warning, TEXT("AimAsRotator : %s"), *DeltaRotator.ToString());
-	// Move the barrel the right amount this frame
-	// 在当前帧移动适量的角度
-
-	// Given a max elevation speed, and the frame time
-	// 给定最大仰角速度和帧时间
+	
+	Barrel->Elevate(5);
 
 
 }
