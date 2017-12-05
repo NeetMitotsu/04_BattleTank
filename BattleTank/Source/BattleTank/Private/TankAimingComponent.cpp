@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
@@ -37,23 +37,23 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 	if (!Barrel) {
 		return;
 	}
-	// ·¢ÉäËÙ¶È
+	// å‘å°„é€Ÿåº¦
 	FVector OutLaunchVelocity;
-	// ¿ªÊ¼Î»ÖÃ
+	// å¼€å§‹ä½ç½®
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 
-	// ¼ÆËãµ½´ïÖ¸ÏòÎ»ÖÃËùÐèµÄËÙ¶ÈÏòÁ¿OutLaunchVelocity£¨x, y, z£© 
+	// è®¡ç®—åˆ°è¾¾æŒ‡å‘ä½ç½®æ‰€éœ€çš„é€Ÿåº¦å‘é‡OutLaunchVelocityï¼ˆx, y, zï¼‰ 
 	// 
 	bool bHaveAimSolusion = UGameplayStatics::SuggestProjectileVelocity(
 		this,
 		OutLaunchVelocity,
 		StartLocation,
-		HitLocation,// µ½´ïÎ»ÖÃ
-		LaunchSpeed,// ³õËÙ¶È
-		false,// ÊÇ·ñÎª»¡Ïß£¿
-		//0,// Åö×²°ë¾¶
-		//0,//ÖØÁ¦
-		ESuggestProjVelocityTraceOption::DoNotTrace // ¸ú×ÙÑ¡Ïî
+		HitLocation,// åˆ°è¾¾ä½ç½®
+		LaunchSpeed,// åˆé€Ÿåº¦
+		false,// æ˜¯å¦ä¸ºå¼§çº¿ï¼Ÿ
+		//0,// ç¢°æ’žåŠå¾„
+		//0,//é‡åŠ›
+		ESuggestProjVelocityTraceOption::DoNotTrace // è·Ÿè¸ªé€‰é¡¹
 	);
 	
 	if (bHaveAimSolusion) { // Calculate the OutLaunchVelocity
@@ -72,7 +72,7 @@ void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet) {
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
 
 	// Work-out difference between current barrel rotation, and AimDirection
-	// ¼ÆËãµ±Ç°ÅÚÌ¨ºÍAimDirectionÖ®¼ä£¬ÐèÒªÐý×ªµÄ½Ç¶È
+	// è®¡ç®—å½“å‰ç‚®å°å’ŒAimDirectionä¹‹é—´ï¼Œéœ€è¦æ—‹è½¬çš„è§’åº¦
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;

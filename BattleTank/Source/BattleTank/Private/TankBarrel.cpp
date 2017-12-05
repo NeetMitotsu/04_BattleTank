@@ -1,15 +1,16 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankBarrel.h"
 
 
-void UTankBarrel::Elevate(float DegreesPerSecond) {
-	UE_LOG(LogTemp, Warning, TEXT("DegreesPerSecond: %f"), DegreesPerSecond);
+void UTankBarrel::Elevate(float RelativeSpeed) {
+	UE_LOG(LogTemp, Warning, TEXT("DegreesPerSecond: %f"), RelativeSpeed);
+	
 	// Move the barrel the right amount this frame
-	// ÔÚµ±Ç°Ö¡ÒÆ¶¯ÊÊÁ¿µÄ½Ç¶È
+	// åœ¨å½“å‰å¸§ç§»åŠ¨é€‚é‡çš„è§’åº¦
 
 	// Given a max elevation speed, and the frame time
-	// ¸ø¶¨×î´óÑö½ÇËÙ¶ÈºÍÖ¡Ê±¼ä
+	// ç»™å®šæœ€å¤§ä»°è§’é€Ÿåº¦å’Œå¸§æ—¶é—´
 
 }
 

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -6,7 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
 
-// Forward Declaration Ç°ÏòÉùÃ÷
+// Forward Declaration å‰å‘å£°æ˜
 class UTankBarrel;
 
 // Holds barrel's properties an Elevate method
