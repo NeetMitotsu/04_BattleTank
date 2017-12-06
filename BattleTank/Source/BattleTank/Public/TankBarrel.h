@@ -6,6 +6,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "TankBarrel.generated.h"
 
+
 /**
  * hidecategories 隐藏类别：指定分类将在ue编辑器属性里不可见
  */
@@ -21,7 +22,7 @@ public:
 	
 private:
 	UPROPERTY(EditAnywhere, Category = Setup)
-		float MaxDegreesPerSecond = 20;// Sensible default
+		float MaxDegreesPerSecond = 5;// Sensible default
 	UPROPERTY(EditAnywhere, Category = Setup)
 		float MaxElevationDegrees = 40;
 	UPROPERTY(EditAnywhere, Category = Setup)

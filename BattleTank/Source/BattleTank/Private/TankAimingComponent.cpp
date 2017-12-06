@@ -49,18 +49,21 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 		OutLaunchVelocity,
 		StartLocation,
 		HitLocation,// 到达位置
-		LaunchSpeed,// 初速度
+		LaunchSpeed,// 初速度 
 		false,// 是否为弧线？
-		//0,// 碰撞半径
-		//0,//重力
+		0,// 碰撞半径
+		0,//重力
 		ESuggestProjVelocityTraceOption::DoNotTrace // 跟踪选项
 	);
 	
-	if (bHaveAimSolusion) { // Calculate the OutLaunchVelocity
+	if (bHaveAimSolusion) { // Calculate the OutLa unchVelocity
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		auto TankName = GetOwner()->GetName();
 		MoveBarrelTowards(AimDirection);
 		UE_LOG(LogTemp, Warning, TEXT("%s Aiming at %s"),*TankName, *AimDirection.ToString());
+	} else {
+		auto Time = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("%f: No aim solve found"), Time);
 	}
 	// if no solusion found do nothing
 }
@@ -76,9 +79,9 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
-	UE_LOG(LogTemp, Warning, TEXT("AimAsRotator : %s"), *DeltaRotator.ToString());
+	// UE_LOG(LogTemp, Warning, TEXT("AimAsRotator : %s"), *DeltaRotator.ToString());
 	
-	Barrel->Elevate(5);
+	Barrel->Elevate(DeltaRotator.Pitch);
 
 
 }
