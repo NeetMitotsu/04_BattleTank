@@ -43,7 +43,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 
 	// 计算到达指向位置所需的速度向量OutLaunchVelocity（x, y, z） 
-	// 
+	// Calculate the OutLaunchVelocity 计算 发射速度（OutLaunchVelocity）
 	bool bHaveAimSolusion = UGameplayStatics::SuggestProjectileVelocity(
 		this,
 		OutLaunchVelocity,
@@ -56,7 +56,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 		ESuggestProjVelocityTraceOption::DoNotTrace // 跟踪选项
 	);
 	
-	if (bHaveAimSolusion) { // Calculate the OutLa unchVelocity
+	if (bHaveAimSolusion) { 
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		auto TankName = GetOwner()->GetName();
 		MoveBarrelTowards(AimDirection);
@@ -65,7 +65,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 		auto Time = GetWorld()->GetTimeSeconds();
 		UE_LOG(LogTemp, Warning, TEXT("%f: No aim solve found"), Time);
 	}
-	// if no solusion found do nothing
+	// if no solution found do nothing
 }
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet) {

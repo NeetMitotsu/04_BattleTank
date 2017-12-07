@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
 #include "Tank.h"
@@ -39,15 +39,18 @@ void ATankPlayerController::AimTowardsCrosshair() {
 // Get world location if linetrace through crosshait, true if hits landscape
 bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const {
 	// Find the crosshair position in pixel coordinates
+	// 找到像素坐标中的十字线位置
 	int32 ViewportSizeX, ViewportSizeY;
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
 	
 	auto ScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
 	
 	// "De-project" the screen position of the crosshair to a world direction
+	// 将十字线的屏幕位置投影到 世界方向？
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection)){
 		// Line-trace along that look direction, and see what we hit(up to max range)
+		// 沿视线方向跟中， 看命中了什么（最大范围）
 		GetLookVectorHitLocation(LookDirection, HitLocation);
 	}
 
@@ -55,7 +58,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const {
 }
 
 bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const {
-	FVector CameraWorldLocation; // to be discarded
+	FVector CameraWorldLocation; // to be discarded 会被丢弃
 	return DeprojectScreenPositionToWorld(
 		ScreenLocation.X, 
 		ScreenLocation.Y, 
@@ -75,6 +78,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 			ECollisionChannel::ECC_Visibility)
 		) {
 		// Set hit location
+		// 设置命中位置
 		HitLocation = HitResult.Location;
 		return true; 
 	}
