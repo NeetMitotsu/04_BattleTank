@@ -5,13 +5,13 @@
 
 
 
-void UTankTurret::Elevate(float RelativeSpeed) {
+void UTankTurret::Rotate(float RelativeSpeed) {
 	// 锁定速度
 	RelativeSpeed = FMath::Clamp<float>(RelativeSpeed, -1, +1);
 	// 计算旋转角度
-	auto ElevationChange = RelativeSpeed * MaxDegreesPerSecond * GetWorld()->DeltaTimeSeconds;
+	auto RotationChange = RelativeSpeed * MaxDegreesPerSecond * GetWorld()->DeltaTimeSeconds;
 	// 新角度
-	auto RawNewElevation = RelativeRotation.Yaw + ElevationChange;
+	auto Rotation = RelativeRotation.Yaw + RotationChange;
 	// 设置模型旋转
-	SetRelativeRotation(FRotator(0, 0, RawNewElevation));
+	SetRelativeRotation(FRotator(0, Rotation, 0));
 }

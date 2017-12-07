@@ -15,7 +15,7 @@ class BATTLETANK_API UTankTurret : public UStaticMeshComponent
 	GENERATED_BODY()
 	
 public:
-	void Elevate(float RelativeSpeed);	
+	void Rotate(float RelativeSpeed);
 	
 private:
 	// 每秒最大旋转角度

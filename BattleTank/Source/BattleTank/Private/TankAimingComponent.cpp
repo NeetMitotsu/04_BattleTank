@@ -9,7 +9,7 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
 }
@@ -56,12 +56,13 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 		0,//重力
 		ESuggestProjVelocityTraceOption::DoNotTrace // 跟踪选项
 	);
+
 	
 	if (bHaveAimSolusion) { 
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		auto TankName = GetOwner()->GetName();
 		MoveBarrelTowards(AimDirection);
-		UE_LOG(LogTemp, Warning, TEXT("%s Aiming at %s"),*TankName, *AimDirection.ToString());
+		// UE_LOG(LogTemp, Warning, TEXT("%s Aiming at %s"),*TankName, *AimDirection.ToString());
 	} else {
 		auto Time = GetWorld()->GetTimeSeconds();
 		UE_LOG(LogTemp, Warning, TEXT("%f: No aim solve found"), Time);
@@ -70,10 +71,12 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 }
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet) {
+	if (!BarrelToSet) { return; }
 	this->Barrel = BarrelToSet;
 }
 
-void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet) {
+void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet) {\
+if (!TurretToSet) { return; }
 	this->Turret = TurretToSet;
 }
 
@@ -87,6 +90,5 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
 	// UE_LOG(LogTemp, Warning, TEXT("AimAsRotator : %s"), *DeltaRotator.ToString());
 	
 	Barrel->Elevate(DeltaRotator.Pitch);
-	Turret->Elevate(DeltaRotator.Yaw);
-
+	Turret->Rotate(DeltaRotator.Yaw);
 }
