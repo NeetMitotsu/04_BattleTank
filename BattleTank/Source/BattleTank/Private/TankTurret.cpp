@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankTurret.h"
 #include "Engine.h"
@@ -6,13 +6,12 @@
 
 
 void UTankTurret::Elevate(float RelativeSpeed) {
-	// Ëø¶¨ËÙ¶È
+	// é”å®šé€Ÿåº¦
 	RelativeSpeed = FMath::Clamp<float>(RelativeSpeed, -1, +1);
-	// ¼ÆËãÑö½Ç
+	// è®¡ç®—æ—‹è½¬è§’åº¦
 	auto ElevationChange = RelativeSpeed * MaxDegreesPerSecond * GetWorld()->DeltaTimeSeconds;
-	// ĞÂÑö½Ç
-	auto RawNewElevation = RelativeRotation.Raw + ElevationChange;
-	// Ëø¶¨×î´óÑö½Ç
-	// ÉèÖÃÄ£ĞÍÑö½Ç
-	SetRelativeRotation(FRotator(0, RawNewElevation, 0));
+	// æ–°è§’åº¦
+	auto RawNewElevation = RelativeRotation.Yaw + ElevationChange;
+	// è®¾ç½®æ¨¡å‹æ—‹è½¬
+	SetRelativeRotation(FRotator(0, 0, RawNewElevation));
 }
