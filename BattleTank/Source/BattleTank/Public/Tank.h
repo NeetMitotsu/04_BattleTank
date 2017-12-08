@@ -35,6 +35,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurretReference(UTankTurret* TurretToset);
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void Fire(FVector print);
 private:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
