@@ -14,7 +14,8 @@ class BATTLETANK_API UTankMovementComponen : public UNavMovementComponent
 {
 	GENERATED_BODY()
 
-		void IntendMovForward(float Throw);
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void IntendMoveForward(float Throw);
 	
 	
 };
