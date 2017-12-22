@@ -2,6 +2,7 @@
 
 #include "TankMovementComponen.h"
 #include "TankTrack.h"
+#include "Engine.h"
 
 void UTankMovementComponen::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet) {
 	LeftTrack = LeftTrackToSet;
@@ -20,6 +21,15 @@ void UTankMovementComponen::IntendMoveRigth(float Throw) {
 	if (!LeftTrack || !RightTrack) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
+}
+
+void UTankMovementComponen::RequestDirectMove(const FVector & MoveVelocity, bool bForceMaxSpeed) {
+	auto TankForward = GetOwner()->GetActorForwardVector().GetSafeNormal();
+	auto AIForwardIntention = MoveVelocity.GetSafeNormal();
+	// 计算两个向量间的x方向间的单位向量积
+	auto ForwardThrow = FVector::DotProduct(AIForwardIntention, TankForward);
+	//UE_LOG(LogTemp, Warning, TEXT("result : %f"), result)
+		IntendMoveForward(ForwardThrow);
 }
 
 

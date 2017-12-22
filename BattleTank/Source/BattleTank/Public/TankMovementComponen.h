@@ -23,6 +23,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Input)
 		void IntendMoveRigth(float Throw);
+
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 	
 private:
 
