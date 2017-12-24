@@ -28,8 +28,10 @@ void UTankMovementComponen::RequestDirectMove(const FVector & MoveVelocity, bool
 	auto AIForwardIntention = MoveVelocity.GetSafeNormal();
 	// 计算两个向量间的x方向间的单位向量积
 	auto ForwardThrow = FVector::DotProduct(AIForwardIntention, TankForward);
+	auto RightThrow = FVector::CrossProduct(TankForward, AIForwardIntention).Z;
 	//UE_LOG(LogTemp, Warning, TEXT("result : %f"), result)
-		IntendMoveForward(ForwardThrow);
+	IntendMoveRigth(RightThrow);
+	IntendMoveForward(ForwardThrow);
 }
 
 
