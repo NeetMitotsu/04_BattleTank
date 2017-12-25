@@ -22,7 +22,7 @@ public:
 	
 	virtual void Tick(float DeltaTime) override;
 protected:
-	UFUNCTION(BlueprintCallable, category = Setup)
+	UFUNCTION(BlueprintCallable, category = "Setup")
 	ATank* GetControlledTank() const;
 
 private:

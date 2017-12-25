@@ -25,6 +25,12 @@ void UTankAimingComponent::BeginPlay()
 }
 
 
+void UTankAimingComponent::Initialise(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet)
+{
+	Barrel = BarrelToSet;
+	Turret = TurretToSet;
+}
+
 // Called every frame
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
@@ -34,7 +40,8 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 }
 
 
-void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
+void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
+{
 	if (!Barrel) {
 		return;
 	}
@@ -70,18 +77,18 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 	// if no solution found do nothing
 }
 
-void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet) {
-	if (!BarrelToSet) { return; }
-	this->Barrel = BarrelToSet;
-}
-
-void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet) {\
-if (!TurretToSet) { return; }
-	this->Turret = TurretToSet;
-}
+//void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet) {
+//	if (!BarrelToSet) { return; }
+//	this->Barrel = BarrelToSet;
+//}
+//
+//void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet) {\
+//if (!TurretToSet) { return; }
+//	this->Turret = TurretToSet;
+//}
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
-
+	if (!Barrel || !Turret) { return; }
 	// Work-out difference between current barrel rotation, and AimDirection
 	// 计算当前炮台和AimDirection之间，需要旋转的角度
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();

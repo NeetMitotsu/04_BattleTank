@@ -19,7 +19,7 @@ public:
 	
 private:
 	// 每秒最大旋转角度
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		float MaxDegreesPerSecond = 25;// Sensible default
 	
 };
