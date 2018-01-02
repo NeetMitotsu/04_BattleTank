@@ -2,17 +2,21 @@
 
 #include "TankPlayerController.h"
 #include "Tank.h"
+#include "TankAimingComponent.h"
 #include "Engine.h"
 
 
 
-void ATankPlayerController::BeginPlay() {
+void ATankPlayerController::BeginPlay() { 
 	Super::BeginPlay();
-	auto ControlledTank = GetControlledTank();
-	if (!ControlledTank) {
-		UE_LOG(LogTemp, Warning, TEXT("PlayController not possesing a tank"));
-	} else {
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController possesing %s"), *ControlledTank->GetName());
+	auto AimComp = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	if (AimComp)
+	{
+		FoundAimingComponent(AimComp);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Can't find AimComp"));
 	}
 }
 
@@ -21,7 +25,8 @@ void ATankPlayerController::Tick(float DeltaTime) {
 	AimTowardsCrosshair();
 }
 
-ATank* ATankPlayerController::GetControlledTank() const {
+ATank* ATankPlayerController::GetControlledTank() const 
+{
 	return Cast<ATank>(GetPawn());
 }
 
