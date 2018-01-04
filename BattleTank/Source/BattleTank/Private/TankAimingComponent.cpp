@@ -40,11 +40,9 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 }
 
 
-void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector HitLocation)
 {
-	if (!Barrel) {
-		return;
-	}
+	if (!ensure(Barrel)) { return; }
 	// 发射速度
 	FVector OutLaunchVelocity;
 	// 开始位置
@@ -70,10 +68,11 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		auto TankName = GetOwner()->GetName();
 		MoveBarrelTowards(AimDirection);
 		// UE_LOG(LogTemp, Warning, TEXT("%s Aiming at %s"),*TankName, *AimDirection.ToString());
-	} else {
+	}
+	/*else {
 		auto Time = GetWorld()->GetTimeSeconds();
 		UE_LOG(LogTemp, Warning, TEXT("%f: No aim solve found"), Time);
-	}
+	}*/
 	// if no solution found do nothing
 }
 
@@ -88,7 +87,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 //}
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
-	if (!Barrel || !Turret) { return; }
+	if (!ensure(Barrel) || !ensure(Turret)) { return; }
 	// Work-out difference between current barrel rotation, and AimDirection
 	// 计算当前炮台和AimDirection之间，需要旋转的角度
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
